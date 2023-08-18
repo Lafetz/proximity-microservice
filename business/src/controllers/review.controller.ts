@@ -93,7 +93,7 @@ export const updateReview = [
     }
   },
 ];
-export const deleteReview = [
+export const removeReview = [
   body("reviewId").trim().notEmpty().withMessage("You must supply ReviewId"),
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {

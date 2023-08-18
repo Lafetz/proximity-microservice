@@ -1,15 +1,22 @@
 import express from "express";
-import * as reservationController from "../controllers/reservation.controller";
+import * as reviewController from "../controllers/review.controller";
 const router = express.Router();
-router.get("/api/v1/reservations", reservationController.getReservations); //users
 router.get(
-  "/api/v1/reservations/:reservationID",
-  reservationController.getReservation
+  "/api/v1/businesses/:businessId/reviews",
+  reviewController.getReviews
 );
-router.post("/api/v1/reservations", reservationController.addReservation);
-router.delete(
-  "/api/v1/reservations/:reservationID",
-  reservationController.deleteReservation
+router.get(
+  "/api/v1/businesses/:businessId/reviews/:reviewId",
+  reviewController.getReview
+);
+router.put(
+  "/api/v1/businesses/:businessId/reviews/:reviewId",
+  reviewController.updateReview
 );
 
-export { router as reservationRoute };
+router.delete(
+  "/api/v1/businesses/:businessId/reviews/:reviewId",
+  reviewController.removeReview
+);
+
+export { router as reviewRoute };
