@@ -1,5 +1,6 @@
 import amqp from "amqplib";
 import { amqpConnection } from "./connection";
+import { Business } from "@prisma/client";
 class Producer {
   channel: amqp.Channel | null;
 
@@ -15,7 +16,7 @@ class Producer {
       throw new Error(err);
     }
   }
-  async publishMessage(routingKey: string, exchange: string, message: object) {
+  async publishMessage(routingKey: string, exchange: string, message: Object) {
     if (!this.channel) {
       await this.createChannel();
     }

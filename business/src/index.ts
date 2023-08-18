@@ -20,6 +20,6 @@ app.all("*", (req, res) => {
   throw new NotFoundError();
 });
 app.use(errorHandler); //
-app.listen(8080, () => {
-  console.log(`Server running son ${8080}`);
+app.listen(3000, () => {
+  console.log(`Server running son ${3000}`);
 });
