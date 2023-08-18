@@ -4,14 +4,16 @@
 
 import { Business } from "@prisma/client";
 import prisma from "./client";
-import { BusinessAdd } from "../../types/models/business";
+import { BusinessAdd } from "../../types/models";
 
 // DELETE /v1/businesses/:id
-export const getBusiness = async (id: string) => {
-  return await prisma.business.findUnique({ where: { business_id: id } });
+export const getBusiness = async (businessId: string) => {
+  return await prisma.business.findUnique({
+    where: { business_id: businessId },
+  });
 };
 export const addBusiness = async (business: BusinessAdd) => {
-  return prisma.business.create({ data: business });
+  return await prisma.business.create({ data: business });
 };
 export const updateBusiness = async (business: Business) => {
   return await prisma.business.update({
@@ -19,6 +21,6 @@ export const updateBusiness = async (business: Business) => {
     data: business,
   });
 };
-export const removeBusiness = async (id: string) => {
-  return await prisma.business.delete({ where: { business_id: id } });
+export const removeBusiness = async (businessId: string) => {
+  return await prisma.business.delete({ where: { business_id: businessId } });
 };

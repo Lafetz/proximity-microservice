@@ -4,19 +4,6 @@ import { body } from "express-validator";
 import { validateRequest } from "../middlewares/validateRequest.middleware";
 import producer from "../rabbit/producer";
 export const addReview = [
-  // body("user_id ")
-  //   .trim()
-  //   .notEmpty()
-  //   .withMessage("You must supply  user_not_yet"),
-  // body("city").trim().notEmpty().withMessage("You must supply a city"),
-  // body("state").trim().notEmpty().withMessage("You must supply a  state "),
-  // body("country").trim().notEmpty().withMessage("You must supply a country "),
-  // body("latitude").trim().notEmpty().withMessage("You must supply a latitude "),
-  // body("longtiude")
-  //   .trim()
-  //   .notEmpty()
-  //   .withMessage("You must supply a longtiude"),
-
   body("business_id")
     .trim()
     .notEmpty()
@@ -92,7 +79,7 @@ export const updateReview = [
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { business_id, content, score, date, review_id } = req.body;
-      await db.updateReview({
+      const review = await db.updateReview({
         review_id,
         user_id: "notyet",
         business_id,
@@ -100,7 +87,7 @@ export const updateReview = [
         score,
         date,
       });
-      res.send(200);
+      res.send(200).json(review);
     } catch (err) {
       next(err);
     }
@@ -112,17 +99,9 @@ export const deleteReview = [
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       await db.removeReview(req.body.reviewId);
-      res.send(200);
+      res.sendStatus(200);
     } catch (err) {
       next(err);
     }
   },
 ];
-// async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {  try {
-// } catch (err) {
-//   next(err);
-// }};

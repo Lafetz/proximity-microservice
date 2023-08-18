@@ -17,7 +17,7 @@ model Business {
   state       String
   country     String
   latitude    String
-  longtitude  String
+  longitude   String
   Review      Review[]
 }
 
