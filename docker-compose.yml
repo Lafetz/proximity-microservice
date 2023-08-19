@@ -43,59 +43,25 @@ services:
       POSTGRES_DB: search
     volumes:
       - ./pgdata2:/var/lib/postgres/data
-  # management:
-  #   build: ./management
-  #   container_name: management
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - ./management:/usr/src/app
-  #   depends_on:
-  #     - management-postgres
-  #     - rabbitmq
-  # management-postgres:
-  #   image: postgres:15
-  #   environment:
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_DB: management
-  #   volumes:
-  #     - ./pgdata2:/var/lib/postgres/data
-  # payment:
-  #   build: ./payment
-  #   container_name: payment
-  #   ports:
-  #     - "6000:6000"
-  #   volumes:
-  #     - ./payment:/usr/src/app
-  #   depends_on:
-  #     - payment-postgres
-  #     - rabbitmq
-  # payment-postgres:
-  #   image: postgres:15
-  #   environment:
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_DB: payment
-  #   volumes:
-  #     - ./pgdata2:/var/lib/postgres/data
-  # auth:
-  #   build: ./auth
-  #   container_name: auth
-  #   ports:
-  #     - "7000:7000"
-  #   volumes:
-  #     - ./auth:/usr/src/app
-  #   depends_on:
-  #     - auth-postgres
-  #     - rabbitmq
-  # auth-postgres:
-  #   image: postgres:15
-  #   environment:
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_DB: auth
-  #   volumes:
-  #     - ./pgdata2:/var/lib/postgres/data
-  # auth-redis:
-  #   image: redis:6.2-alpine
-  #   restart: always
-  #   volumes:
-  #     - ./redis-data:/data
+  auth:
+    build: ./auth
+    container_name: auth
+    ports:
+      - "7000:7000"
+    volumes:
+      - ./auth:/usr/src/app
+    depends_on:
+      - auth-postgres
+      - rabbitmq
+  auth-postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: auth
+    volumes:
+      - ./pgdata2:/var/lib/postgres/data
+  auth-redis:
+    image: redis:6.2-alpine
+    restart: always
+    volumes:
+      - ./redis-data:/data
