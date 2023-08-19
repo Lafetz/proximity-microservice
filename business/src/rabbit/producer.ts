@@ -21,7 +21,7 @@ class Producer {
       await this.createChannel();
     }
 
-    await this.channel!.assertExchange(exchange, "topic");
+    await this.channel!.assertExchange(exchange, "direct");
     const publish = this.channel!.publish(
       exchange,
       routingKey,
