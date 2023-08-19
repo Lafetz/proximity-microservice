@@ -26,23 +26,23 @@ services:
       POSTGRES_DB: hotel
     volumes:
       - ./pgdata:/var/lib/postgres/data
-  # reservation:
-  #   build: ./reservation
-  #   container_name: reservation
-  #   ports:
-  #     - "4000:4000"
-  #   volumes:
-  #     - ./reservation:/usr/src/app
-  #   depends_on:
-  #     - reservation-postgres
-  #     - rabbitmq
-  # reservation-postgres:
-  #   image: postgres:15
-  #   environment:
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_DB: reservation
-  #   volumes:
-  #     - ./pgdata2:/var/lib/postgres/data
+  search:
+    build: ./search
+    container_name: search
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./search:/usr/src/app
+    depends_on:
+      - search-postgres
+      - rabbitmq
+  search-postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: search
+    volumes:
+      - ./pgdata2:/var/lib/postgres/data
   # management:
   #   build: ./management
   #   container_name: management
