@@ -11,11 +11,6 @@ const app = express();
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("/test", async (req, res) => {
-  // await consumeMessages("Info.#", "logExchange22", "logEx");
-  // producer.publishMessage("Infoc.car", "logExchange22", { hell: "working" });
-  res.send("yes working");
-});
 app.use(searchRoute);
 
 app.all("*", (req, res) => {
@@ -23,6 +18,7 @@ app.all("*", (req, res) => {
 });
 app.use(errorHandler);
 app.use(errorHandler); //
-app.listen(3000, () => {
-  console.log(`Server running son ${3000}`);
+app.listen(4000, () => {
+  console.log(`Server running son ${4000}`);
 });
+//

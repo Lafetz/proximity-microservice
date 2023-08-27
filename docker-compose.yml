@@ -1,32 +1,32 @@
 version: "3.8"
 services:
-  rabbitmq:
-    image: rabbitmq:3.11-management
-    container_name: rabbitmq
-    environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
-    ports:
-      - "15672:15672"
-      - "5672:5672"
-  business:
-    build: ./business
-    container_name: business
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./business:/usr/src/app
-    depends_on:
-      - business-postgres
-      - rabbitmq
-  business-postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: hotel
-    volumes:
-      - ./pgdata:/var/lib/postgres/data
-        # ////
+  # rabbitmq:
+  #   image: rabbitmq:3.11-management
+  #   container_name: rabbitmq
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=guest
+  #     - RABBITMQ_DEFAULT_PASS=guest
+  #   ports:
+  #     - "15672:15672"
+  #     - "5672:5672"
+  # business:
+  #   build: ./business
+  #   container_name: business
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./business:/usr/src/app
+  #   depends_on:
+  #     - business-postgres
+  #     - rabbitmq
+  # business-postgres:
+  #   image: postgres:15
+  #   environment:
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: hotel
+  #   volumes:
+  #     - ./pgdata:/var/lib/postgres/data
+  #       # ////
   search:
     build: ./search
     container_name: search
@@ -34,9 +34,9 @@ services:
       - "4000:4000"
     volumes:
       - ./search:/usr/src/app
-    depends_on:
-      - search-postgres
-      - rabbitmq
+    # depends_on:
+    #   - search-postgres
+    #   - rabbitmq
   geohash:
     image: redis:6.2-alpine
     restart: always
@@ -48,25 +48,25 @@ services:
     volumes:
       - ./redis-data:/data
       # ////
-  auth:
-    build: ./auth
-    container_name: auth
-    ports:
-      - "7000:7000"
-    volumes:
-      - ./auth:/usr/src/app
-    depends_on:
-      - auth-postgres
-      - rabbitmq
-  auth-postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: auth
-    volumes:
-      - ./pgdata2:/var/lib/postgres/data
-  auth-redis:
-    image: redis:6.2-alpine
-    restart: always
-    volumes:
-      - ./redis-data:/data
+  # auth:
+  #   build: ./auth
+  #   container_name: auth
+  #   ports:
+  #     - "7000:7000"
+  #   volumes:
+  #     - ./auth:/usr/src/app
+  #   depends_on:
+  #     - auth-postgres
+  #     - rabbitmq
+  # auth-postgres:
+  #   image: postgres:15
+  #   environment:
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: auth
+  #   volumes:
+  #     - ./pgdata2:/var/lib/postgres/data
+  # auth-redis:
+  #   image: redis:6.2-alpine
+  #   restart: always
+  #   volumes:
+  #     - ./redis-data:/data
