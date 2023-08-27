@@ -8,7 +8,7 @@ export const getNearby = async (
 ) => {
   try {
     const { businessType, longitude, latitude, radius } = req.body;
-    console.log(businessType, longitude, latitude, radius);
+
     const businessIds = await searchBusiness(
       businessType,
       longitude,
@@ -16,7 +16,7 @@ export const getNearby = async (
       radius
     );
     if (businessIds.length === 0) {
-      return res.status(400).json({ message: "no suchthing in this area" });
+      return res.sendStatus(204);
     }
     const businesses = await getBusinesses(...businessIds);
     res.status(200).json(businesses);
