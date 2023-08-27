@@ -26,6 +26,7 @@ services:
       POSTGRES_DB: hotel
     volumes:
       - ./pgdata:/var/lib/postgres/data
+        # ////
   search:
     build: ./search
     container_name: search
@@ -36,13 +37,17 @@ services:
     depends_on:
       - search-postgres
       - rabbitmq
-  search-postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: search
+  geohash:
+    image: redis:6.2-alpine
+    restart: always
     volumes:
-      - ./pgdata2:/var/lib/postgres/data
+      - ./redis-data:/data
+  business-info:
+    image: redis:6.2-alpine
+    restart: always
+    volumes:
+      - ./redis-data:/data
+      # ////
   auth:
     build: ./auth
     container_name: auth

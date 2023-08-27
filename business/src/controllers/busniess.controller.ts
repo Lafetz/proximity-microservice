@@ -84,9 +84,9 @@ export const getBusiness = [
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-    } catch (err) {
       const business = await db.getBusiness(req.body.businessId);
       res.status(200).json(business);
+    } catch (err) {
       next(err);
     }
   },
