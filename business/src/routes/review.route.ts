@@ -13,7 +13,10 @@ router.put(
   "/api/v1/businesses/:businessId/reviews/:reviewId",
   reviewController.updateReview
 );
-
+router.post(
+  "/api/v1/businesses/:businessId/reviews",
+  reviewController.addReview
+);
 router.delete(
   "/api/v1/businesses/:businessId/reviews/:reviewId",
   reviewController.removeReview

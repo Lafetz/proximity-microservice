@@ -4,8 +4,17 @@ const client = Redis.createClient({
 });
 client.connect().catch(console.error);
 export const addBusinessInfo = async (businessId: string, business: string) => {
-  await client.set(businessId, business);
+  const value = await client.set(businessId, business);
+  if (value !== "OK") {
+    console.error("buinessInfo couldn't be added");
+  }
 };
 export const getBusinesses = async (...args: string[]) => {
   return await client.mGet([...args]);
+};
+export const removeBusinessInfo = async (businessId: string) => {
+  const value = await client.del(businessId);
+  if (value === 0) {
+    console.error("buinessInfo couldn't be removed");
+  }
 };

@@ -11,14 +11,15 @@ datasource db {
 }
 
 model Business {
-  business_id String   @id @default(uuid())
-  user_id     String
-  city        String
-  state       String
-  country     String
-  latitude    String
-  longitude   String
-  Review      Review[]
+  business_id   String   @id @default(uuid())
+  user_id       String
+  business_Type String
+  city          String
+  state         String
+  country       String
+  latitude      Float
+  longitude     Float
+  Review        Review[]
 }
 
 model Review {
@@ -30,3 +31,5 @@ model Review {
   score       Int
   date        DateTime
 }
+
+//

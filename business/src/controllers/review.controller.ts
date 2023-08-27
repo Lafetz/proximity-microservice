@@ -23,7 +23,7 @@ export const addReview = [
         user_id: "notyet",
         business_id,
         content,
-        score,
+        score: Number(score),
         date: new Date(date),
       });
       res.status(201).json(review);
@@ -33,11 +33,9 @@ export const addReview = [
   },
 ];
 export const getReview = [
-  body("reviewId").trim().notEmpty().withMessage("You must supply ReviewId"),
-  validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const review = await db.getReview(req.body.reviewId);
+      const review = await db.getReview(req.params.reviewId);
       if (!review) {
         return res.status(400).json({ message: "review not found" });
       }
@@ -48,14 +46,9 @@ export const getReview = [
   },
 ];
 export const getReviews = [
-  body("businessId")
-    .trim()
-    .notEmpty()
-    .withMessage("You must supply businessId"),
-  validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const reviews = await db.getReviews(req.body.businessId);
+      const reviews = await db.getReviews(req.params.businessId);
       res.status(200).json(reviews);
     } catch (err) {
       next(err);
@@ -74,7 +67,7 @@ export const updateReview = [
     .isInt({ max: 5, min: 0 })
     .withMessage("You must supply correct score"),
   body("date").trim().notEmpty().withMessage("You must supply Date"),
-  body("reviewId").trim().notEmpty().withMessage("You must supply ReviewId"),
+  body("review_id").trim().notEmpty().withMessage("You must supply ReviewId"),
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -84,22 +77,21 @@ export const updateReview = [
         user_id: "notyet",
         business_id,
         content,
-        score,
+        score: Number(score),
         date,
       });
-      res.send(200).json(review);
+
+      res.status(200).json(review);
     } catch (err) {
       next(err);
     }
   },
 ];
 export const removeReview = [
-  body("reviewId").trim().notEmpty().withMessage("You must supply ReviewId"),
-  validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await db.removeReview(req.body.reviewId);
-      res.sendStatus(200);
+      await db.removeReview(req.params.reviewId);
+      res.sendStatus(204);
     } catch (err) {
       next(err);
     }

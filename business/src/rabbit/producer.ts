@@ -1,6 +1,8 @@
 import amqp from "amqplib";
 import { amqpConnection } from "./connection";
-import { Business } from "@prisma/client";
+const exchangeName = "x.proximity";
+const exchangeType = "direct";
+const routingKey = "proximity";
 class Producer {
   channel: amqp.Channel | null;
 
@@ -16,14 +18,14 @@ class Producer {
       throw new Error(err);
     }
   }
-  async publishMessage(routingKey: string, exchange: string, message: Object) {
+  async publishMessage(message: Object) {
     if (!this.channel) {
       await this.createChannel();
     }
 
-    await this.channel!.assertExchange(exchange, "direct");
+    await this.channel!.assertExchange(exchangeName, exchangeType);
     const publish = this.channel!.publish(
-      exchange,
+      exchangeName,
       routingKey,
       Buffer.from(JSON.stringify(message))
     );

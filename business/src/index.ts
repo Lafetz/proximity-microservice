@@ -6,6 +6,7 @@ import { errorHandler } from "./middlewares/errorhandler.middleware";
 import { NotFoundError } from "./errors/notFound.error";
 import { busniessRoute } from "./routes/busniess.route";
 import { reviewRoute } from "./routes/review.route";
+import producer from "./rabbit/producer";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/test", async (req, res) => {
   // await consumeMessages("Info.#", "logExchange22", "logEx");
   // producer.publishMessage("Infoc.car", "logExchange22", { hell: "working" });
+  await producer.publishMessage("bus", "x.proximity", { loo: "shit" });
   res.send("yes working");
 });
 app.use(reviewRoute);

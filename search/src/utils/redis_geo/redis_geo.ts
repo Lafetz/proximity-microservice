@@ -10,11 +10,14 @@ export const addBusinessGeo = async (
   longitude: number,
   latitude: number
 ) => {
-  await client.geoAdd(businessType, {
+  const value = await client.geoAdd(businessType, {
     longitude,
     latitude,
     member: businessId,
   });
+  if (value === 0) {
+    console.error("buinessGeo couldn't be added");
+  }
 };
 export const searchBusiness = async (
   businessType: string,
@@ -27,4 +30,13 @@ export const searchBusiness = async (
     { latitude, longitude },
     { radius, unit: "km" }
   );
+};
+export const removeBusinessGeo = async (
+  businessType: string,
+  businessId: string
+) => {
+  const value = await client.zRem(businessType, businessId);
+  if (value === 0) {
+    console.error("buinessGeo couldn't be removed");
+  }
 };
