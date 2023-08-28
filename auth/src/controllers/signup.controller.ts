@@ -11,13 +11,11 @@ export const userSignup = [
     try {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
       await db.createUser(req.body.email, hashedPassword);
-      res.status(201).json({ msg: "account created!" });
+      res.status(201).json({ message: "account created!" });
     } catch (err) {
-      if (typeof err === "string") {
-        res.status(500).json(err);
-      } else if (err instanceof Error) {
-        res.status(500).json(err.message);
-      }
+      next(err);
     }
   },
 ];
+//
+//

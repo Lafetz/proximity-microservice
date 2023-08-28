@@ -14,6 +14,11 @@ export const errorHandler = (
         .status(400)
         .json({ errors: [{ message: "Requested data doesn't exist" }] });
     }
+    if (err.code == "P2002") {
+      return res
+        .status(400)
+        .json({ errors: [{ message: "email already exists" }] });
+    }
     return res.status(400).json({ errors: [{ message: "Database Error" }] });
   }
 

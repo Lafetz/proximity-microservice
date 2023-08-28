@@ -6,6 +6,7 @@ import { signJWT } from "../utils/jwt.utils";
 import { generateSession } from "../utils/redis.utils";
 import { body } from "express-validator";
 import { validateRequest } from "../middlewares/validateRequest.middleware";
+import { UnauthorizedAccess } from "../errors/unauthorized.error";
 export const userLogin = [
   body("email").isEmail().withMessage("You must supply Email"),
   body("password").trim().notEmpty().withMessage("You must supply password"),
@@ -19,8 +20,7 @@ export const userLogin = [
           user.password
         );
         if (!statusLogin) {
-          res.sendStatus(401).json("incorrect password!");
-          return next();
+          throw new UnauthorizedAccess();
         }
         const accessToken = signJWT(
           {
@@ -52,14 +52,10 @@ export const userLogin = [
           .status(200)
           .json("login success!");
       } else {
-        res.status(500).json("User not found");
+        throw new UnauthorizedAccess();
       }
     } catch (err) {
-      if (typeof err === "string") {
-        res.status(500).json(err);
-      } else if (err instanceof Error) {
-        res.status(500).json(err.message);
-      }
+      next(err);
     }
   },
 ];

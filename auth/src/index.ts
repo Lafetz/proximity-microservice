@@ -11,11 +11,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(authRouter);
 
-app.use("/test", async (req, res) => {
-  // await consumeMessages("Info.#", "logExchange22", "logEx");
-  // producer.publishMessage("Infoc.car", "logExchange22", { hell: "working" });
-  res.send("yes working");
-});
 app.all("*", (req, res) => {
   throw new NotFoundError();
 });
