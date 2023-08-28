@@ -13,12 +13,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("/test", async (req, res) => {
-  // await consumeMessages("Info.#", "logExchange22", "logEx");
-  // producer.publishMessage("Infoc.car", "logExchange22", { hell: "working" });
-  await producer.publishMessage("bus", "x.proximity", { loo: "shit" });
-  res.send("yes working");
-});
+
 app.use(reviewRoute);
 app.use(busniessRoute);
 app.all("*", (req, res) => {

@@ -1,12 +1,7 @@
-// GET /v1/businesses/:id
-// POST /v1/businesses
-// PUT /v1/businesses/:id
-
 import { Business } from "@prisma/client";
 import prisma from "./client";
 import { BusinessAdd } from "../../types/models";
 
-// DELETE /v1/businesses/:id
 export const getBusiness = async (businessId: string) => {
   return await prisma.business.findUnique({
     where: { business_id: businessId },
