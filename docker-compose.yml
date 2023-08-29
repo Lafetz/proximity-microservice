@@ -20,6 +20,11 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://rabbitmq:15672"]
+      interval: 3s
+      timeout: 10s
+      retries: 3
   business:
     build: ./business
     container_name: business
@@ -28,6 +33,10 @@ services:
     depends_on:
       - business-postgres
       - rabbitmq
+    links:
+      - rabbitmq
+      - business-postgres
+
   business-postgres:
     image: postgres:15
     environment:
@@ -35,16 +44,23 @@ services:
       POSTGRES_DB: hotel
     volumes:
       - ./pgdata:/var/lib/postgres/data
-        # ////
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://rabbitmq:15672"]
+      interval: 3s
+      timeout: 10s
+      retries: 3
   search:
     build: ./search
     container_name: search
     volumes:
       - ./search:/usr/src/app
     depends_on:
+      - rabbitmq
       - geohash
       - business-info
+    links:
       - rabbitmq
+
   geohash:
     image: redis:6.2-alpine
     restart: always
