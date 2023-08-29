@@ -35,7 +35,6 @@ services:
       - rabbitmq
     links:
       - rabbitmq
-      - business-postgres
 
   business-postgres:
     image: postgres:15
@@ -44,11 +43,7 @@ services:
       POSTGRES_DB: hotel
     volumes:
       - ./pgdata:/var/lib/postgres/data
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://rabbitmq:15672"]
-      interval: 3s
-      timeout: 10s
-      retries: 3
+
   search:
     build: ./search
     container_name: search
