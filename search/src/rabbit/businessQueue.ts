@@ -14,7 +14,8 @@ export const businessQueue = async () => {
   const exchangeType = "direct";
   const key = "proximity";
   try {
-    const connection = await amqpConnection();
+    let connection = await amqpConnection();
+
     const channel = await connection.createChannel();
     await channel.assertExchange(exchangeName, exchangeType, {});
     const { queue } = await channel.assertQueue(queueName, {});

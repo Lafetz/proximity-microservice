@@ -4,7 +4,7 @@
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
-    "start": "npx tsc -w & nodemon ./dist/index.js",
+    "start": "prisma migrate deploy && npx tsc -w & nodemon ./dist/index.js",
     "build": "npx tsc"
   },
   "keywords": [],

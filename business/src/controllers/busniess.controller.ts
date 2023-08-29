@@ -25,7 +25,6 @@ export const addBusiness = [
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     //@ts-ignore
-    console.log(req.user.id);
     const subject = 0; //0 means created or updated
     try {
       const { city, business_Type, state, country, latitude, longitude } =

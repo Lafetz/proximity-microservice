@@ -13,6 +13,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 businessQueue();
+
 app.use(searchRoute);
 
 app.all("*", (req, res) => {

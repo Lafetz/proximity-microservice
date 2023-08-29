@@ -31,7 +31,7 @@ export const getNearby = [
         return res.sendStatus(204);
       }
       const businesses = await getBusinesses(...businessIds);
-      res.status(200).json(businesses);
+      res.status(200).json({ businesses, businessType });
     } catch (err) {
       next(err);
     }

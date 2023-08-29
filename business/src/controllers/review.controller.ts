@@ -20,7 +20,8 @@ export const addReview = [
     try {
       const { business_id, content, score, date } = req.body;
       const review = await db.addReview({
-        user_id: "notyet",
+        //@ts-ignore
+        user_id: req.user.userId,
         business_id,
         content,
         score: Number(score),
@@ -70,16 +71,21 @@ export const updateReview = [
   body("review_id").trim().notEmpty().withMessage("You must supply ReviewId"),
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
+    //@ts-ignore
+    const user_id = req.user.userId;
     try {
       const { business_id, content, score, date, review_id } = req.body;
-      const review = await db.updateReview({
-        review_id,
-        user_id: "notyet",
-        business_id,
-        content,
-        score: Number(score),
-        date,
-      });
+      const review = await db.updateReview(
+        {
+          review_id,
+          user_id,
+          business_id,
+          content,
+          score: Number(score),
+          date,
+        },
+        user_id
+      );
 
       res.status(200).json(review);
     } catch (err) {
@@ -89,8 +95,10 @@ export const updateReview = [
 ];
 export const removeReview = [
   async (req: Request, res: Response, next: NextFunction) => {
+    //@ts-ignore
+    const user_id = req.user.userId;
     try {
-      await db.removeReview(req.params.reviewId);
+      await db.removeReview(req.params.reviewId, user_id);
       res.sendStatus(204);
     } catch (err) {
       next(err);

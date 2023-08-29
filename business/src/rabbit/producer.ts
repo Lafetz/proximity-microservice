@@ -1,19 +1,30 @@
 import amqp from "amqplib";
-import { amqpConnection } from "./connection";
+
 const exchangeName = "x.proximity";
 const exchangeType = "direct";
 const routingKey = "proximity";
 class Producer {
   channel: amqp.Channel | null;
-
+  connection: amqp.Connection | null | void;
   constructor() {
     this.channel = null;
+    this.connection = null;
+  }
+  async createConnection() {
+    this.connection = await amqp.connect("amqp://rabbitmq").catch((e) => {
+      console.log(e);
+    });
   }
 
   async createChannel() {
     try {
-      const connection = await amqpConnection();
-      this.channel = await connection.createChannel();
+      if (!this.connection) {
+        await this.createConnection();
+      }
+      if (!this.connection) {
+        throw new Error();
+      }
+      this.channel = await this.connection.createChannel();
     } catch (err: any) {
       throw new Error(err);
     }
