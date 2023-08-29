@@ -10,12 +10,14 @@ export const getBusiness = async (businessId: string) => {
 export const addBusiness = async (business: BusinessAdd) => {
   return await prisma.business.create({ data: business });
 };
-export const updateBusiness = async (business: Business) => {
+export const updateBusiness = async (business: Business, user_id: string) => {
   return await prisma.business.update({
-    where: { business_id: business.business_id },
+    where: { business_id: business.business_id, user_id },
     data: business,
   });
 };
-export const removeBusiness = async (businessId: string) => {
-  return await prisma.business.delete({ where: { business_id: businessId } });
+export const removeBusiness = async (businessId: string, user_id: string) => {
+  return await prisma.business.delete({
+    where: { business_id: businessId, user_id },
+  });
 };

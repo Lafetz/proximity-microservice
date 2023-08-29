@@ -76,6 +76,8 @@ export const updateBusiness = [
     .withMessage("You must supply a longtiude"),
   async (req: Request, res: Response, next: NextFunction) => {
     const subject = 0; //0 means created or updated/
+    //@ts-ignore
+    const user_id = req.user.userId;
     try {
       const {
         city,
@@ -86,17 +88,20 @@ export const updateBusiness = [
         longitude,
         business_id,
       } = req.body;
-      const business = await db.updateBusiness({
-        //@ts-ignore
-        user_id: req.user.userId,
-        business_Type,
-        city,
-        state,
-        country,
-        latitude: Number(latitude),
-        longitude: Number(longitude),
-        business_id: req.params.businessId,
-      });
+      const business = await db.updateBusiness(
+        {
+          //@ts-ignore
+          user_id,
+          business_Type,
+          city,
+          state,
+          country,
+          latitude: Number(latitude),
+          longitude: Number(longitude),
+          business_id: req.params.businessId,
+        },
+        user_id
+      );
       await producer.publishMessage(JSON.stringify({ subject, business }));
       res.status(200).json(business);
     } catch (err) {
@@ -110,8 +115,10 @@ export const removeBusiness = async (
   next: NextFunction
 ) => {
   const subject = 1; //1 means removed
+  //@ts-ignore
+  const user_id = req.user.userId;
   try {
-    const business = await db.removeBusiness(req.params.businessId);
+    const business = await db.removeBusiness(req.params.businessId, user_id);
     await producer.publishMessage(JSON.stringify({ subject, business }));
     res.sendStatus(200);
   } catch (err) {

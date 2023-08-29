@@ -11,12 +11,14 @@ export const getReview = async (reviewId: string) => {
 export const getReviews = async (businessId: string) => {
   return await prisma.review.findMany({ where: { business_id: businessId } });
 };
-export const updateReview = async (review: Review) => {
+export const updateReview = async (review: Review, user_id: string) => {
   return await prisma.review.update({
-    where: { review_id: review.review_id },
+    where: { review_id: review.review_id, user_id },
     data: review,
   });
 };
-export const removeReview = async (reviewId: string) => {
-  return await prisma.review.delete({ where: { review_id: reviewId } });
+export const removeReview = async (reviewId: string, user_id: string) => {
+  return await prisma.review.delete({
+    where: { review_id: reviewId, user_id },
+  });
 };
