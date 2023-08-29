@@ -2,7 +2,7 @@
 
 ## Overview:
 
-A microservice used to discover nearby places such as restaurants, hotels, theaters, museums,etc.users can add their own business and add review to other buinesses.
+A microservice used to discover nearby places such as restaurants, hotels, theaters, museums,etc. Users can add their own business and add review to other buinesses.
 
 ## Technologies:
 
@@ -13,4 +13,4 @@ A microservice used to discover nearby places such as restaurants, hotels, theat
 
 ## Architecture
 
-![](https://github.com/lafetz/proximity-microservice/master/design.png)
+![](https://github.com/Lafetz/proximity-microservice/blob/main/design.png)
