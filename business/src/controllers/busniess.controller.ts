@@ -24,12 +24,15 @@ export const addBusiness = [
     .withMessage("You must supply a longitude"),
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
+    //@ts-ignore
+    console.log(req.user.id);
     const subject = 0; //0 means created or updated
     try {
       const { city, business_Type, state, country, latitude, longitude } =
         req.body;
       const business = await db.addBusiness({
-        user_id: "xof",
+        //@ts-ignore
+        user_id: req.user.userId,
         business_Type,
         city,
         state,
@@ -72,7 +75,7 @@ export const updateBusiness = [
     .notEmpty()
     .withMessage("You must supply a longtiude"),
   async (req: Request, res: Response, next: NextFunction) => {
-    const subject = 0; //0 means created or updated
+    const subject = 0; //0 means created or updated/
     try {
       const {
         city,
@@ -84,14 +87,15 @@ export const updateBusiness = [
         business_id,
       } = req.body;
       const business = await db.updateBusiness({
-        user_id: "xof",
+        //@ts-ignore
+        user_id: req.user.userId,
         business_Type,
         city,
         state,
         country,
         latitude: Number(latitude),
         longitude: Number(longitude),
-        business_id,
+        business_id: req.params.businessId,
       });
       await producer.publishMessage(JSON.stringify({ subject, business }));
       res.status(200).json(business);
@@ -126,7 +130,7 @@ export const getBusiness = async (
       return res.status(404).json({
         errors: [
           {
-            message: "User not found",
+            message: "Business not found",
           },
         ],
       });

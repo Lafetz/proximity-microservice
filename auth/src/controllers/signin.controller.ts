@@ -40,17 +40,15 @@ export const userLogin = [
         );
         res.cookie("refreshToken", refreshToken, {
           maxAge: 60 * 60 * 24 * 30 * 1000, //1 month
-          secure: true,
+
           httpOnly: true,
         });
-        res
-          .cookie("accessToken", accessToken, {
-            maxAge: 60 * 60 * 24 * 30 * 1000, //1 month
-            secure: true,
-            httpOnly: true,
-          })
-          .status(200)
-          .json("login success!");
+        res.cookie("accessToken", accessToken, {
+          maxAge: 60 * 60 * 24 * 30 * 1000, //1 month
+
+          httpOnly: true,
+        });
+        res.status(200).json({ message: "login success!" });
       } else {
         throw new UnauthorizedAccess();
       }

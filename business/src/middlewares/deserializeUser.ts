@@ -18,7 +18,6 @@ function deserializeUser(req: Request, res: Response, next: NextFunction) {
     req.user = payload;
     return next();
   }
-
   const { payload: refresh } =
     expired && refreshToken ? verifyJWT(refreshToken) : { payload: null };
 
@@ -41,6 +40,7 @@ function deserializeUser(req: Request, res: Response, next: NextFunction) {
   });
 
   // @ts-ignore
+
   req.user = verifyJWT(newAccessToken).payload;
 
   return next();

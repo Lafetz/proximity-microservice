@@ -6,7 +6,7 @@ import { errorHandler } from "./middlewares/errorhandler.middleware";
 import { NotFoundError } from "./errors/notFound.error";
 import { busniessRoute } from "./routes/busniess.route";
 import { reviewRoute } from "./routes/review.route";
-import producer from "./rabbit/producer";
+
 import deserializeUser from "./middlewares/deserializeUser";
 
 const app = express();
