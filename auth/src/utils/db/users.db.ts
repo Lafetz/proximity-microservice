@@ -1,4 +1,3 @@
-import { User } from "@prisma/client";
 import prisma from "./client";
 
 export const getUser = async (email: string) => {

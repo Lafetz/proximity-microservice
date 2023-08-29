@@ -4,11 +4,3 @@ export function signJWT(payload: object, expiresIn: string | number) {
     expiresIn,
   });
 }
-export const verifyJWT = (token: string) => {
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_KEY as string);
-    return { payload: decoded, expired: false };
-  } catch (error: any) {
-    return { payload: null, expired: true };
-  }
-};

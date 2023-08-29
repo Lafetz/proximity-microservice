@@ -10,7 +10,3 @@ export const generateSession = async (username: string) => {
 
   return sessionId;
 };
-export const getSession = async (sessionId: string) => {
-  const session = await client.get(sessionId);
-  return session;
-};
