@@ -6,6 +6,7 @@ A microservice used to discover nearby places such as restaurants, hotels, theat
 
 ## Technologies:
 
+- Express js
 - Geohash
 - RabbitMQ
 - Redis
